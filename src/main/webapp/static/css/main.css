@@ -1,0 +1,272 @@
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.myTable{
+    position: absolute;
+    border-radius: 7px;
+    top: 55%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.myTable:hover {
+    box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.slider {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.slItems {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slItem {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-backface-visibility: hidden; /* Chrome, Safari, Opera */
+    backface-visibility: hidden;
+}
+
+.slText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 170px;
+    text-align: center;
+    transform: translate3d(-50%, -50%, 0);
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -o-transform: translate3d(-50%, -50%, 0);
+    -ms-transform: translate3d(-50%, -50%, 0);
+    color: #fff;
+    font-size: 30px;
+}
+.title{
+    padding: 0 170px;
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+}
+.slider [class*="ctrl"] {
+    position: absolute;
+    top: 50%;
+    color: #fff;
+    font-size: 85px;
+    font-weight: bold;
+    margin-top: -42.5px;
+    cursor: pointer;
+}
+
+.ctrlNext {
+    right: 50px;
+}
+
+.ctrlPrev {
+    left: 50px;
+}
+
+.slItem.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+}
+
+.next, .prev {
+    transition: transform 0.7s ease-in-out;
+    -webkit-transition: -webkit-transform 0.7s ease-in-out;
+    -moz-transition: -moz-transform 0.7s ease-in-out;
+    -o-transition: -o-transform 0.7s ease-in-out;
+    -ms-transition: -ms-transform 0.7s ease-in-out;
+}
+
+.slItem.nextItem {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(100%,0, 0);
+    -webkit-transform: translate3d(100%,0,0);
+    -moz-transform: translate3d(100%,0,0);
+    -o-transform: translate3d(100%,0,0);
+    -ms-transform: translate3d(100%,0,0);
+}
+
+.slItem.nextItem.next, .slItem.prevItem.prev {
+    transform: translate3d(0,0);
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+}
+
+.slItem.active.next {
+    transform: translate3d(-100%,0,0);
+    -webkit-transform: translate3d(-100%,0,0);
+    -moz-transform: translate3d(-100%,0,0);
+    -o-transform: translate3d(-100%,0,0);
+    -ms-transform: translate3d(-100%,0,0);
+}
+
+.slItem.prevItem {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(-100%,0,0);
+    -webkit-transform: translate3d(-100%,0,0);
+    -moz-transform: translate3d(-100%,0,0);
+    -o-transform: translate3d(-100%,0,0);
+    -ms-transform: translate3d(-100%,0,0);
+}
+
+.slItem.active.prev {
+    transform: translate3d(100%,0,0);
+    -webkit-transform: translate3d(100%,0,0);
+    -moz-transform: translate3d(100%,0,0);
+    -o-transform: translate3d(100%,0,0);
+    -ms-transform: translate3d(100%,0,0);
+}
+
+.slDots {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -o-transform: translate(-50%,  0);
+    -ms-transform: translate(-50%, 0);
+}
+
+.slDotsSingle {
+    width: 13px;
+    height: 13px;
+    float: left;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.slDotsSingle.active {
+    background: #FFFFFF;
+}
+
+.slDotsSingle:hover {
+    background: #D0D0D0;
+    border-color: #D0D0D0;
+}
+
+
+
+/*My CSS*/
+
+.d2 {
+    border-radius: 7px;
+    position: fixed;
+    top: 5%;
+    left: 4%;
+    width: 550px;
+    height:250px;
+    z-index: 2;
+    /*display: block;*/
+    background: #DABB52;
+    font-family: FontAwesome;
+    color: #F9F0DA;
+    font-size: 20px;
+    font-weight: bold;
+}
+.d2 input, .d2 button {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+}
+.d2 input[type=text] {
+    width: 100%;
+    height: 42px;
+    background: #F9F0DA;
+    padding-left: 15px;
+}
+.d2 button {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #F15B42;
+    cursor: pointer;
+}
+.d2 button:before {
+    content: "\f105";
+    font-family: FontAwesome;
+    color: #F9F0DA;
+    font-size: 20px;
+    font-weight: bold;
+}
+.choose{
+    position: relative;
+    width: 100%;
+    top: 8px;
+    left: 8px;
+}
+.date{
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 180px;
+}
+/*.session{*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    display: inline-block;*/
+/*    !*left: 8px;*!*/
+/*}*/
+/*.films{*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    display: inline-block;*/
+/*    left: 150px;*/
+/*}*/
+
+.d2 input[type=checkbox]  ,.d2 input[type=radio]{
+    width: 42px;
+    height: 42px;
+    background: #F9F0DA;
+    padding-left: 15px;
+}
+
+.time {
+    font-family: bold;
+    margin-left: 10px;
+    font-weight: 900;
+    color: red;
+    font-size: 30px;
+    border-bottom: 1px solid transparent;
+    transition: 250ms;
+    display: inline-block;
+    letter-spacing: -1.5px;
+}
