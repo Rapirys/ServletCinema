@@ -10,7 +10,9 @@ The purpose of the project is practice and demonstration of work skills.
 ***
 
 База даних - Postgresql, використовується PL/pgSQL.
-Сервлетна версія проєкту.
+
+Це сервлетна версія проєкту.
+
 Спрінгова версія: https://github.com/Rapirys/SpringCinema#readme
 
 ![image](https://user-images.githubusercontent.com/65134982/158803311-077f8709-6ad9-40e7-9b1d-a31911c6fcd0.png)
