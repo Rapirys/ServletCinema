@@ -28,7 +28,6 @@ public class MainController {
 
     SortManager sortManager = SortManager.getInstance();
 
-
     @GetMapping(path ="/cinema")
     public String main(Model model,
                        @RequestParam(name = "search", defaultValue = "") String search,

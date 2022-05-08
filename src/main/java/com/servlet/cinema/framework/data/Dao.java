@@ -1,13 +1,20 @@
 package com.servlet.cinema.framework.data;
 
+import com.servlet.cinema.application.model.repository.OrderRepository;
+import com.servlet.cinema.application.model.repository.SessionRepository;
 import com.servlet.cinema.framework.exaptions.RepositoryException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public abstract class Dao {
+
+/**
+ * Class which used contains basic logic of work with transactions.
+ */
+public class Dao {
 
     public Connection connection;
+
 
     public void beginTransaction(){
         try {
@@ -31,5 +38,6 @@ public abstract class Dao {
     public void close(){
         ConnectionPool.getInstance().close(connection);
     }
+
 
 }

@@ -1,5 +1,7 @@
 package com.servlet.cinema.framework.security;
 
+import com.servlet.cinema.application.entities.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;

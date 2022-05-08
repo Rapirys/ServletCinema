@@ -5,6 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * A holder for model attributes.
+ * Primarily designed for adding attributes to the model.
+ */
 public class Model {
     public Map <String, Object> attributes;
     public HttpServletRequest request;
@@ -26,6 +31,10 @@ public class Model {
         attributes.put(name, o);
     }
 
+
+    /**
+     * Add attributes from model to http response.
+     */
     public void merge(){
         for(Map.Entry<String, Object> entry: attributes.entrySet()){
             request.setAttribute(entry.getKey(), entry.getValue());

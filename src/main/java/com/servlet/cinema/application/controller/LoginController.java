@@ -6,7 +6,6 @@ import com.servlet.cinema.framework.annotation.Controller;
 import com.servlet.cinema.framework.annotation.GetMapping;
 import com.servlet.cinema.framework.annotation.PostMapping;
 import com.servlet.cinema.framework.annotation.RequestParam;
-import com.servlet.cinema.framework.data.ConnectionPool;
 import com.servlet.cinema.framework.web.Model;
 import com.servlet.cinema.framework.web.RedirectAttributes;
 import org.apache.log4j.Logger;
@@ -14,7 +13,7 @@ import com.servlet.cinema.framework.security.SecurityManager;
 
 
 
-import java.sql.Connection;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,6 @@ import static com.servlet.cinema.framework.security.PasswordEncoder.encode;
 @Controller
 public class LoginController {
     private final static Logger logger = Logger.getLogger(RegisterController.class);
-    private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
     @GetMapping(path = "/cinema/login")
@@ -48,6 +46,7 @@ public class LoginController {
         if (userFromDB == null || !userFromDB.getPassword().equals(encode(password)))
             s.add("Invalid_username");
         if (s.size() == 0){
+            System.out.println(userFromDB.getUsername()+" "+userFromDB.getAuthorities()+" "+userFromDB.getId());
             SecurityManager.addUserToSession(model, userFromDB);
             logger.debug("User id: "+userFromDB.getId()+" log in.");
             return "redirect:/cinema";

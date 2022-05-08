@@ -23,7 +23,6 @@ import java.util.Optional;
 public class TicketRepository extends Dao {
     private final static Logger logger = Logger.getLogger(TicketRepository.class);
 
-    // @Query(value = "  SELECT * FROM findHall(?1)  ORDER BY \"row\", place", nativeQuery = true)
     public static final String getHallBySession =" SELECT * FROM findHall(?) ORDER BY \"row\", place";
 
 

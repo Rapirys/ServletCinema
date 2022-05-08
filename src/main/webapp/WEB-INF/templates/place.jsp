@@ -104,7 +104,8 @@
         }
     </script>
 </header>
-<img class="poster" src="../../static/posters/${mySession.film.film_id}.jpeg"/>
+<%--<img class="poster" src="../../static/posters/${mySession.film.film_id}.jpeg"/>--%>
+<img class="poster" src="/upload/${mySession.film.film_id}.jpeg"/>
 <div class="title">
     <c:set var="title" scope="session" value="${lang.gL('locale')}"/>
     <p>${lang.gL("Choice_of_seats")}</p>

@@ -6,6 +6,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.function.Function;
 
+
+/**
+ * Describes the "standard converters" as an implementation of functional interfaces
+ *
+ * used in the "Converter" class
+ * @see Converter
+ */
 public class StandardConverter {
     Function<String, Integer> integerC = Integer::valueOf;
     Function<String, Boolean> booleanC = Boolean::valueOf;

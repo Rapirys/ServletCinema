@@ -11,10 +11,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Stack;
 
+
 public final class ConnectionPool {
     private static final int INIT_CAPACITY = 5;
     private static final int MAX_CAPACITY = 30;
-    private static  String url;
+    private static String url;
     private static String user;
     private static String password;
     private final static Logger logger = Logger.getLogger(ConnectionPool.class);
@@ -22,35 +23,28 @@ public final class ConnectionPool {
     private static final Stack<Connection> connections = new Stack<>();
     private static int given = 0;
 
-    public static ConnectionPool getInstance(){
+    public static ConnectionPool getInstance() {
         return instance;
     }
 
 
-    private static Class getClass(String classname)
-            throws ClassNotFoundException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if(classLoader == null)
-            classLoader = ConnectionPool.class.getClassLoader();
-        return (classLoader.loadClass(classname));
-    }
-
-    public synchronized Connection getConnection(){
-        if (connections.size()> 0) {
+    public synchronized Connection getConnection() {
+        if (connections.size() > 0) {
             Connection connection = connections.pop();
             given++;
             return connection;
-        }else if (given<MAX_CAPACITY){
+        } else if (given < MAX_CAPACITY) {
             try {
-                Connection connection = connections.push(connections.push( DriverManager.getConnection(url, user, password)));
+                Connection connection = connections.push(connections.push(DriverManager.getConnection(url, user, password)));
                 given++;
-                return connections.push(connections.push( DriverManager.getConnection(url, user, password)));
+                return connections.push(connections.push(DriverManager.getConnection(url, user, password)));
             } catch (SQLException e) {
                 logger.error("Problem to get connection from DB");
                 e.printStackTrace();
                 throw new ConnectionPoolException("Problem to get connection from DB", e);
             }
-        }else {
+        } else {
+            logger.debug("Tread wait to connection");
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -59,7 +53,8 @@ public final class ConnectionPool {
             return getConnection();
         }
     }
-    public synchronized void close(Connection connection){
+
+    public synchronized void close(Connection connection) {
         try {
             if (!connection.getAutoCommit()) {
                 connection.rollback();
@@ -68,14 +63,14 @@ public final class ConnectionPool {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (connections.size()>INIT_CAPACITY) {
+        if (connections.size() >= INIT_CAPACITY) {
             try {
                 connection.close();
                 given--;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else connections.push(connection);
+        } else connections.push(connection);
         notify();
     }
 
@@ -85,9 +80,9 @@ public final class ConnectionPool {
         user = property.getProperty("datasource.username");
         password = property.getProperty("datasource.password");
 
-        for (int i = 0; i<INIT_CAPACITY; i++){
+        for (int i = 0; i < INIT_CAPACITY; i++) {
             try {
-                connections.push( DriverManager.getConnection(url, user, password));
+                connections.push(DriverManager.getConnection(url, user, password));
             } catch (Exception e) {
                 logger.error("Cant create connection during initialization");
                 e.printStackTrace();
@@ -111,5 +106,9 @@ public final class ConnectionPool {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getSize(){
+        return connections.size();
     }
 }

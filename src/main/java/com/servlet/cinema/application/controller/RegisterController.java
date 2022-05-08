@@ -9,13 +9,11 @@ import com.servlet.cinema.framework.annotation.Controller;
 import com.servlet.cinema.framework.annotation.GetMapping;
 import com.servlet.cinema.framework.annotation.PostMapping;
 import com.servlet.cinema.framework.annotation.RequestParam;
-import com.servlet.cinema.framework.data.ConnectionPool;
 import com.servlet.cinema.framework.security.PasswordEncoder;
 import com.servlet.cinema.framework.web.Model;
 import com.servlet.cinema.framework.web.RedirectAttributes;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

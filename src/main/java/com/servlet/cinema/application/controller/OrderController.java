@@ -10,7 +10,7 @@ import com.servlet.cinema.application.model.repository.OrderRepository;
 import com.servlet.cinema.application.model.repository.SessionRepository;
 import com.servlet.cinema.application.model.repository.TicketRepository;
 import com.servlet.cinema.application.model.service.Hall.Place;
-import com.servlet.cinema.application.model.service.OrderManager;
+import com.servlet.cinema.application.model.service.OrderManager.OrderManager;
 import com.servlet.cinema.application.model.service.Validator;
 import com.servlet.cinema.framework.annotation.*;
 import com.servlet.cinema.framework.web.Model;
@@ -113,7 +113,7 @@ public class OrderController {
             ArrayList<String> messages = new ArrayList<>();
             messages.add("Card_data_error");
             redirectAttributes.addFlashAttribute("message", messages);
-            redirectAttributes.addAttributes("id", order_id.toString());
+            redirectAttributes.addAttribute("id", order_id.toString());
             return "redirect:/cinema/order";
         }
         Order order;
@@ -122,8 +122,8 @@ public class OrderController {
         } catch (Exception e) {
             return "orderOld.jsp";
         }
-        redirectAttributes.addAttributes("order", order.getOrder_id().toString());
-        redirectAttributes.addAttributes("user", order.getUser().getId().toString());
+        redirectAttributes.addAttribute("order", order.getOrder_id().toString());
+        redirectAttributes.addAttribute("user", order.getUser().getId().toString());
         return "redirect:/cinema/download";
     }
 

@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-
+/**
+ Used for easy access to cookies.
+ */
 public class CookieManager {
 
     public static Cookie findCookiesByName(String name, HttpServletRequest request){
@@ -20,6 +22,7 @@ public class CookieManager {
         }
         return null;
     };
+
     public static void changUniqueCookie(String name, String value, HttpServletRequest request, HttpServletResponse response){
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals(name))

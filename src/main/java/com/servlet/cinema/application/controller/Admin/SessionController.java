@@ -1,15 +1,11 @@
 package com.servlet.cinema.application.controller.Admin;
 
-
-
-
 import com.servlet.cinema.application.entities.Film;
 import com.servlet.cinema.application.entities.Session;
 import com.servlet.cinema.application.model.repository.FilmRepository;
 import com.servlet.cinema.application.model.repository.SessionRepository;
 import com.servlet.cinema.application.model.service.Hall.HallTopology;
 import com.servlet.cinema.application.model.service.SortManager;
-import com.servlet.cinema.application.model.service.Validator;
 import com.servlet.cinema.framework.annotation.*;
 import com.servlet.cinema.framework.web.Model;
 import com.servlet.cinema.framework.web.RedirectAttributes;
@@ -17,7 +13,6 @@ import org.apache.log4j.Logger;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;

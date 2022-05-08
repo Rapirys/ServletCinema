@@ -1,6 +1,11 @@
 package com.servlet.cinema.framework.Util;
 
 
+/**
+ * A tuple of things.
+ * @param <S> Type of the first thing.
+ * @param <T> Type of the second thing.
+ */
 public final class Pair<S, T> {
     private final S first;
     private final T second;

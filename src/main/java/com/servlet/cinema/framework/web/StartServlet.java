@@ -11,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.servlet.cinema.framework.web.ViewResolver.processView;
-
 
 @WebServlet("")
 public class StartServlet extends HttpServlet {
     private final static Logger logger = Logger.getLogger(DispatcherServlet.class);
-    private final HandlerMapping  handlerMapping = HandlerMapping.getInstance();
 
     public void init() {
     }

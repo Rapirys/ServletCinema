@@ -5,6 +5,7 @@ package com.servlet.cinema.application.controller.Admin;
 import com.servlet.cinema.application.entities.Film;
 import com.servlet.cinema.application.model.repository.FilmRepository;
 import com.servlet.cinema.application.model.service.SortManager;
+import com.servlet.cinema.framework.Util.AppContext;
 import com.servlet.cinema.framework.annotation.*;
 import com.servlet.cinema.framework.web.Model;
 import org.apache.log4j.Logger;
@@ -20,7 +21,8 @@ import java.util.List;
 public class FilmController {
     private final static Logger logger = Logger.getLogger(FilmController.class);
     SortManager sortManager = SortManager.getInstance();
-    String path="C:/ServletCinemaFolder/src/main/webapp/static/posters/";
+
+    String path= AppContext.property.getProperty("upload.path");
 
     @PreAuthorize("ADMIN")
     @GetMapping(path = "/cinema/admin/film")

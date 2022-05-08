@@ -1,4 +1,4 @@
-package com.servlet.cinema.application.model.service;
+package com.servlet.cinema.application.model.service.OrderManager;
 
 
 import com.itextpdf.text.*;
@@ -38,9 +38,7 @@ public class OrderManager {
     }
 
 
-
-
-    HallTopology hallTopology = HallTopology.getInstance();
+    public HallTopology hallTopology = HallTopology.getInstance();
 
     /**
      * Creates a new order, and books seats, the booking will be invalid after 15 minutes.
@@ -156,17 +154,3 @@ public class OrderManager {
     }
 }
 
-class SessionNotExist extends Exception{
-    public SessionNotExist(String message){
-        super(message);
-    }
-    public SessionNotExist(){
-    }
-}
-class OrderNotExist extends Exception{
-    public OrderNotExist(String message){
-        super(message);
-    }
-    public OrderNotExist(){
-    }
-}

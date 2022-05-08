@@ -1,8 +1,14 @@
 package com.servlet.cinema.framework.web;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * A class that controllers can use to select attributes for a redirect scenario.
+ */
 public class RedirectAttributes {
 
     public Map<String, List<String>> attributes;
@@ -20,6 +26,10 @@ public class RedirectAttributes {
         this.flashAttributes = new HashMap<>();
     }
 
+    public RedirectAttributes() {
+        this.attributes = new HashMap<>();
+    }
+
     public List<String> getAttribute(String name) {
         if (attributes.containsKey(name))
             return attributes.get(name);
@@ -30,10 +40,14 @@ public class RedirectAttributes {
         attributes.put(name, o);
     }
 
-    public void addAttributes(String name, String o) {
+    public void addAttribute(String name, String o) {
         attributes.put(name, new ArrayList(List.of(o)));
     }
 
+
+    /**
+     * @return Add attributes to redirect URL.
+     */
     public String merge(){
         StringBuilder stringBuilder = new StringBuilder("?");
         for(Map.Entry<String, List<String>> entry: attributes.entrySet()){
