@@ -15,4 +15,6 @@ The purpose of the project is practice and demonstration of work skills.
 
 Спрінгова версія: https://github.com/Rapirys/SpringCinema
 
+Скрипты для создания БД находятся в DDL.txt
+
 ![image](https://user-images.githubusercontent.com/65134982/158803311-077f8709-6ad9-40e7-9b1d-a31911c6fcd0.png)
