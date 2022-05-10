@@ -1,4 +1,4 @@
-package com.spring.cinema.model.service;
+package com.servlet.cinema.application.service;
 
 
 import com.servlet.cinema.application.entities.Ticket;

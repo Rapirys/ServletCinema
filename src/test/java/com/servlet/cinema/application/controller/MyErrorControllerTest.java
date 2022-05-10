@@ -1,6 +1,7 @@
 package com.servlet.cinema.application.controller;
 
 
+import com.servlet.cinema.application.controller.MyErrorController;
 import com.servlet.cinema.framework.exaptions.ControllerNotExist;
 
 import com.servlet.cinema.framework.web.Model;

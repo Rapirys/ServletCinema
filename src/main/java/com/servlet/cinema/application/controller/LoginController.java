@@ -46,7 +46,6 @@ public class LoginController {
         if (userFromDB == null || !userFromDB.getPassword().equals(encode(password)))
             s.add("Invalid_username");
         if (s.size() == 0){
-            System.out.println(userFromDB.getUsername()+" "+userFromDB.getAuthorities()+" "+userFromDB.getId());
             SecurityManager.addUserToSession(model, userFromDB);
             logger.debug("User id: "+userFromDB.getId()+" log in.");
             return "redirect:/cinema";

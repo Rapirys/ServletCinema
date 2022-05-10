@@ -1,4 +1,4 @@
-package com.spring.cinema.entities;
+package com.servlet.cinema.application.entities;
 
 import com.servlet.cinema.application.entities.Film;
 import com.servlet.cinema.application.entities.Session;

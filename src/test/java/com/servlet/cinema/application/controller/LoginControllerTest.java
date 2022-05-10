@@ -1,5 +1,6 @@
 package com.servlet.cinema.application.controller;
 
+import com.servlet.cinema.application.controller.LoginController;
 import com.servlet.cinema.framework.web.Model;
 import com.servlet.cinema.framework.web.RedirectAttributes;
 import org.junit.jupiter.api.Test;

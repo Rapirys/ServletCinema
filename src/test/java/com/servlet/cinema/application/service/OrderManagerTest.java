@@ -1,4 +1,4 @@
-package com.spring.cinema.model.service;
+package com.servlet.cinema.application.service;
 
 
 import com.itextpdf.text.DocumentException;
@@ -8,6 +8,7 @@ import com.servlet.cinema.application.entities.Order;
 import com.servlet.cinema.application.entities.Session;
 import com.servlet.cinema.application.entities.Ticket;
 import com.servlet.cinema.application.model.repository.OrderRepository;
+import com.servlet.cinema.application.model.repository.SessionRepository;
 import com.servlet.cinema.application.model.repository.TicketRepository;
 import com.servlet.cinema.application.model.service.Hall.HallTopology;
 import com.servlet.cinema.application.model.service.Hall.Place;
@@ -15,6 +16,7 @@ import com.servlet.cinema.application.model.service.OrderManager.OrderManager;
 import com.servlet.cinema.application.model.service.OrderManager.OrderNotExist;
 import com.servlet.cinema.framework.Util.AppContext;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 
@@ -36,7 +38,7 @@ class OrderManagerTest {
     OrderManager orderManager = OrderManager.getInstance();
 
 
-    @BeforeClass
+    @BeforeAll
     static void init() throws FileNotFoundException {
         ServletContextEvent servletContextEvent = mock(ServletContextEvent.class);
         ServletContext servletContext = mock(ServletContext.class);
@@ -120,21 +122,23 @@ class OrderManagerTest {
         PdfReader pdfReader = new PdfReader(inStream);
 
         assertEquals(getTextFromPage(pdfReader, 1),
-                "1984-01-01 12:00:00\n" +
-                        "Title1 Title2\n" +
-                        "Row: 1\n" +
-                        "Place: 1");
+                """
+                        1984-01-01 12:00:00
+                        Title1 Title2
+                        Row: 1
+                        Place: 1""");
 
     }
 
     @Test
     public void submitOrderNotExist() {
         OrderRepository orderRepository = mock(OrderRepository.class);
+
         try (MockedConstruction<OrderRepository> mocked = mockConstruction(OrderRepository.class, (mock, context) -> {
                     when(orderRepository.findById(0L)).thenReturn(Optional.empty());
                     when(orderRepository.findById(1L)).thenReturn(Optional.of(new Order().setActive(true)));
                 }
-        )) {
+        ); MockedConstruction<SessionRepository> mocked2 = mockConstruction(SessionRepository.class)) {
 
             assertThrows(OrderNotExist.class, () -> {
                 orderManager.submit(0L);
