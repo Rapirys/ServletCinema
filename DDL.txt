@@ -1,0 +1,211 @@
+-- Drop table
+
+-- DROP TABLE public.film;
+
+CREATE TABLE public.film (
+	film_id int4 NOT NULL DEFAULT nextval('film_seq'::regclass),
+	box_office bool NOT NULL,
+	duration int8 NULL,
+	title_en varchar(255) NULL,
+	title_ru varchar(255) NULL,
+	CONSTRAINT film_pkey PRIMARY KEY (film_id)
+);
+
+-- Drop table
+
+-- DROP TABLE public.orders;
+
+CREATE TABLE public.orders (
+	order_id int8 NOT NULL DEFAULT nextval('orders_seq'::regclass),
+	active bool NOT NULL,
+	"time" timestamp NULL,
+	session_id int8 NULL,
+	user_id int4 NULL,
+	CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+	CONSTRAINT fk7ncuqw9n77odylknbo8aikc9w FOREIGN KEY (user_id) REFERENCES public.usr(id),
+	CONSTRAINT fkmglefk4r3jewx4sc3f23gt47p FOREIGN KEY (session_id) REFERENCES public."session"(session_id) ON DELETE CASCADE
+);
+CREATE INDEX order_index ON public.orders USING btree (session_id);
+
+-- Drop table
+
+-- DROP TABLE public."session";
+
+CREATE TABLE public."session" (
+	session_id int8 NOT NULL DEFAULT nextval('session_seq'::regclass),
+	"date" date NULL,
+	occupancy int4 NOT NULL,
+	price int4 NOT NULL,
+	"time" time NULL,
+	film_id int8 NULL,
+	CONSTRAINT session_pkey PRIMARY KEY (session_id),
+	CONSTRAINT fkkkn7xyoyaofuwom5dqmf8bg90 FOREIGN KEY (film_id) REFERENCES public.film(film_id) ON DELETE CASCADE
+);
+CREATE INDEX date_index ON public.session USING btree (date);
+
+-- Drop table
+
+-- DROP TABLE public.tickets;
+
+CREATE TABLE public.tickets (
+	ticket_id int8 NOT NULL DEFAULT nextval('tickets_seq'::regclass),
+	place int4 NOT NULL,
+	"row" int4 NOT NULL,
+	salt int8 NULL,
+	order_id int8 NULL,
+	session_id int8 NULL,
+	CONSTRAINT tickets_pkey PRIMARY KEY (ticket_id),
+	CONSTRAINT ukfprjcudvl1pkf0k4nwo7i3cuo UNIQUE (place, "row", session_id),
+	CONSTRAINT fknf925wjoimwilu05v8urxs63e FOREIGN KEY (session_id) REFERENCES public."session"(session_id) ON DELETE CASCADE,
+	CONSTRAINT fkqgi3sbv1u45s41wawh75ut8ph FOREIGN KEY (order_id) REFERENCES public.orders(order_id) ON DELETE CASCADE
+);
+CREATE INDEX ticket_index ON public.tickets USING btree (order_id);
+
+-- Drop table
+
+-- DROP TABLE public.user_role;
+
+CREATE TABLE public.user_role (
+	user_id int4 NOT NULL,
+	roles varchar(255) NULL,
+	CONSTRAINT fkfpm8swft53ulq2hl11yplpr5 FOREIGN KEY (user_id) REFERENCES public.usr(id)
+);
+
+-- Drop table
+
+-- DROP TABLE public.usr;
+
+CREATE TABLE public.usr (
+	id int4 NOT NULL DEFAULT nextval('usr_seq'::regclass),
+	active bool NOT NULL,
+	email varchar(255) NULL,
+	"password" varchar(255) NULL,
+	username varchar(255) NULL,
+	CONSTRAINT uk_dfui7gxngrgwn9ewee3ogtgym UNIQUE (username),
+	CONSTRAINT uk_g9l96r670qkidthshajdtxrqf UNIQUE (email),
+	CONSTRAINT usr_pkey PRIMARY KEY (id)
+);
+
+CREATE INDEX date_index ON public.session USING btree (date);
+
+CREATE UNIQUE INDEX session_pkey ON public.session USING btree (session_id);
+
+CREATE UNIQUE INDEX film_pkey ON public.film USING btree (film_id);
+
+CREATE INDEX order_index ON public.orders USING btree (session_id);
+
+CREATE UNIQUE INDEX orders_pkey ON public.orders USING btree (order_id);
+
+CREATE INDEX ticket_index ON public.tickets USING btree (order_id);
+
+CREATE UNIQUE INDEX tickets_pkey ON public.tickets USING btree (ticket_id);
+
+CREATE UNIQUE INDEX ukfprjcudvl1pkf0k4nwo7i3cuo ON public.tickets USING btree (place, "row", session_id);
+
+CREATE UNIQUE INDEX uk_dfui7gxngrgwn9ewee3ogtgym ON public.usr USING btree (username);
+
+CREATE UNIQUE INDEX uk_g9l96r670qkidthshajdtxrqf ON public.usr USING btree (email);
+
+CREATE UNIQUE INDEX usr_pkey ON public.usr USING btree (id);
+
+CREATE OR REPLACE FUNCTION public.findhall(numeric)
+ RETURNS TABLE(ticket_id numeric, place numeric, "row" numeric, order_id numeric, session_id numeric, salt numeric)
+ LANGUAGE plpgsql
+AS $function$ 
+    DECLARE
+     rec RECORD;
+     var ALIAS FOR $1; 
+     cur CURSOR FOR
+     SELECT o.session_id AS session_id,
+            t.salt AS salt,
+            t.ticket_id AS ticket_id,
+            o.order_id AS order_id,
+            t.place AS place,
+            t."row" AS "row",
+            o.active AS active,
+            o."time" AS start_time 
+     FROM tickets AS t 
+          INNER JOIN orders AS o ON 
+          t.order_id =o.order_id 
+          INNER JOIN "session" AS s ON
+          o.session_id =s.session_id 
+     WHERE s.session_id =var
+     FOR UPDATE;
+     BEGIN
+        FOR rec IN cur
+                LOOP 
+                 IF (rec.active=TRUE OR rec.start_time>=now()::timestamp - INTERVAL '1 min') THEN
+                   ticket_id=rec.ticket_id;
+                   place = rec.place;
+                  "row"=rec."row";
+                   order_id=rec.order_id;
+                   session_id=rec.session_id;
+                   salt=rec.salt;
+                   RETURN next;
+                 ELSE
+                   DELETE FROM orders WHERE CURRENT OF cur;
+                 END IF;
+                END LOOP;
+       END;
+   $function$
+;
+
+-- DROP SEQUENCE public.film_seq;
+
+CREATE SEQUENCE public.film_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- DROP SEQUENCE public.hibernate_sequence;
+
+CREATE SEQUENCE public.hibernate_sequence
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- DROP SEQUENCE public.orders_seq;
+
+CREATE SEQUENCE public.orders_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- DROP SEQUENCE public.session_seq;
+
+CREATE SEQUENCE public.session_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- DROP SEQUENCE public.tickets_seq;
+
+CREATE SEQUENCE public.tickets_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+-- DROP SEQUENCE public.usr_seq;
+
+CREATE SEQUENCE public.usr_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
