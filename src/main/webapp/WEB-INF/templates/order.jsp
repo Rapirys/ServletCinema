@@ -3,8 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +59,7 @@
             <p>
                 ${lang.gL("Time_for_payment")} 15 ${lang.gL("minute")}
             </p>
-            <c:forEach var="item" items="${message}"  >
+            <c:forEach var="item" items="${message}">
                 <span style="color: red"> ${lang.gL(item)} </span>
             </c:forEach>
 

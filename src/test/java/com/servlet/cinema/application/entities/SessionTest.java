@@ -1,21 +1,20 @@
 package com.servlet.cinema.application.entities;
 
-import com.servlet.cinema.application.entities.Film;
-import com.servlet.cinema.application.entities.Session;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SessionTest {
 
     @Test
     void isPassed() {
-        Session session=new Session();
-        Film film=new Film();
+        Session session = new Session();
+        Film film = new Film();
         film.setDuration(Duration.ofHours(2));
         session.setFilm(film);
 
@@ -30,7 +29,7 @@ class SessionTest {
 
     @Test
     void isWillCome() {
-        Session session=new Session();
+        Session session = new Session();
 
         session.setDate(LocalDate.now().plusDays(100));
         session.setTime(LocalTime.now());
@@ -43,9 +42,9 @@ class SessionTest {
 
 
     @Test
-    void isNow(){
-        Session session=new Session();
-        Film film=new Film();
+    void isNow() {
+        Session session = new Session();
+        Film film = new Film();
         film.setDuration(Duration.ofHours(2));
         session.setFilm(film);
 

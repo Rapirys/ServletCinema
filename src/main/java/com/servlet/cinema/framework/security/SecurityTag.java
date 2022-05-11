@@ -16,13 +16,13 @@ public class SecurityTag extends TagSupport {
     }
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag(){
         HttpSession session = pageContext.getSession();
         User user = SecurityManager.getUserFromSession(session);
         if ((user == null && authority.equals("Anonymous")) ||
-            (user != null && authority.equals("Authenticated")) ||
-            (user != null && user.hasRole(authority)))
-        return  EVAL_BODY_INCLUDE;
+                (user != null && authority.equals("Authenticated")) ||
+                (user != null && user.hasRole(authority)))
+            return EVAL_BODY_INCLUDE;
         else return SKIP_BODY;
     }
 

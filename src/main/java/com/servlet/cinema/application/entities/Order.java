@@ -7,25 +7,22 @@ import java.util.List;
 import java.util.Objects;
 
 
-
 public class Order {
 
     private Long order_id;
 
     User user;
 
-    private List<Ticket> tickets =new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();
     private Session session;
     private LocalDateTime time;
     private boolean active;
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Order)) return false;
-        Order order = (Order) o;
+        if (!(o instanceof Order order)) return false;
         return tickets.equals(order.tickets);
     }
 
@@ -81,6 +78,7 @@ public class Order {
         this.active = active;
         return this;
     }
+
     public User getUser() {
         return user;
     }

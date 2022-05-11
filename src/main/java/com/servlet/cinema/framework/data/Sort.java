@@ -8,8 +8,9 @@ package com.servlet.cinema.framework.data;
  */
 public class Sort {
 
-    private StringBuilder sqlOrder;
-    private Sort(String sqlOrder){
+    private final StringBuilder sqlOrder;
+
+    private Sort(String sqlOrder) {
         this.sqlOrder = new StringBuilder(sqlOrder);
     }
 
@@ -18,10 +19,8 @@ public class Sort {
      * @param column – must not be null.
      * @return new Sort sorted by colum.
      */
-    public static Sort by(String column){
-        StringBuilder sb = new StringBuilder(" ");
-        sb.append(column).append(" ");
-        return new Sort(sb.toString());
+    public static Sort by(String column) {
+        return new Sort(" " + column + " ");
     }
 
     /**
@@ -43,10 +42,10 @@ public class Sort {
 
     /**
      * @param sort – must not be null.
-     * @return  a new Sort consisting of the Sort.Orders of the current Sort combined with the given ones.
+     * @return a new Sort consisting of the Sort.Orders of the current Sort combined with the given ones.
      */
-    public Sort and(Sort sort){
-        this.sqlOrder.append(" , ").append(sort.sqlOrder).toString();
+    public Sort and(Sort sort) {
+        this.sqlOrder.append(" , ").append(sort.sqlOrder);
         return this;
     }
 
@@ -55,13 +54,13 @@ public class Sort {
      */
     @Override
     public String toString() {
-        return " ORDER BY" + sqlOrder.toString();
+        return " ORDER BY" + sqlOrder;
 
     }
 
-    public static enum Direction {
+    public enum Direction {
         ASC,
-        DESC;
+        DESC
     }
 
     public String getSqlOrder() {

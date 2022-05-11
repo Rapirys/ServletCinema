@@ -1,10 +1,11 @@
 package com.servlet.cinema.framework.exaptions;
 
-public class ConnectionPoolException extends RuntimeException{
-    public ConnectionPoolException(){
+public class ConnectionPoolException extends RuntimeException {
+    public ConnectionPoolException() {
         super();
     }
-    public ConnectionPoolException(String s){
+
+    public ConnectionPoolException(String s) {
         super(s);
     }
 

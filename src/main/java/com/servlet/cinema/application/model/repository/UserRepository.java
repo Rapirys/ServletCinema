@@ -6,10 +6,12 @@ import com.servlet.cinema.application.entities.User;
 import com.servlet.cinema.framework.data.ConnectionPool;
 import com.servlet.cinema.framework.data.Dao;
 import com.servlet.cinema.framework.exaptions.RepositoryException;
-
 import org.apache.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -82,26 +84,25 @@ public class UserRepository extends Dao {
     }
 
 
-    public void rewriteRoles(User user) throws  SQLException{
+    public void rewriteRoles(User user) throws SQLException {
         if (user.getId() == null)
             throw new SQLException("user id cant be null while roles updating");
         if (user.getRoles() == null) {
-            Set<Role> roles= new HashSet<>();
+            Set<Role> roles = new HashSet<>();
             roles.add(Role.USER);
             user.setRoles(roles);
         }
         Set<Role> roles = findUserRolesById(user.getId());
         Set<Role> inserted = new HashSet<>();
-        for (Role role : roles){
-            if (!user.getRoles().contains(role)){
+        for (Role role : roles) {
+            if (!user.getRoles().contains(role)) {
                 PreparedStatement deleteRoleStm = connection.prepareStatement(deleteRole);
-                deleteRoleStm.setInt(1,user.getId());
-                deleteRoleStm.setString(2,role.toString());
+                deleteRoleStm.setInt(1, user.getId());
+                deleteRoleStm.setString(2, role.toString());
                 deleteRoleStm.execute();
-            }
-            else inserted.add(role);
+            } else inserted.add(role);
         }
-        for (Role role : user.getRoles()){
+        for (Role role : user.getRoles()) {
             if (!inserted.contains(role)) {
                 PreparedStatement insertRoleStm = connection.prepareStatement(insertRole);
                 insertRoleStm.setInt(1, user.getId());
@@ -111,12 +112,16 @@ public class UserRepository extends Dao {
         }
     }
 
-    public UserRepository() {connection = ConnectionPool.getInstance().getConnection();}
+    public UserRepository() {
+        connection = ConnectionPool.getInstance().getConnection();
+    }
+
     private UserRepository(Connection connection) {
         this.connection = connection;
     }
-    public static UserRepository bound(Dao dao){
+
+    public static UserRepository bound(Dao dao) {
         return new UserRepository(dao.connection);
-    };
+    }
 
 }

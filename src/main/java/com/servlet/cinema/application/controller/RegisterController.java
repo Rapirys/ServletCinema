@@ -5,7 +5,6 @@ import com.servlet.cinema.application.entities.User;
 import com.servlet.cinema.application.model.repository.UserRepository;
 import com.servlet.cinema.application.model.service.Validator;
 import com.servlet.cinema.framework.annotation.Controller;
-
 import com.servlet.cinema.framework.annotation.GetMapping;
 import com.servlet.cinema.framework.annotation.PostMapping;
 import com.servlet.cinema.framework.annotation.RequestParam;
@@ -25,36 +24,36 @@ public class RegisterController {
 
 
     @GetMapping(path = "/cinema/register")
-    public String register (@RequestParam(name = "message", required = false) String[] message,
-                            Model model){
+    public String register(@RequestParam(name = "message", required = false) String[] message,
+                           Model model) {
         model.addAttribute("message", message);
         return "register.jsp";
     }
 
     @PostMapping(path = "/cinema/register")
-    public String addUser (@RequestParam(name = "username") String name,
-                           @RequestParam(name = "email") String email,
-                           @RequestParam(name = "password") String password, RedirectAttributes redirectAttributes){
+    public String addUser(@RequestParam(name = "username") String name,
+                          @RequestParam(name = "email") String email,
+                          @RequestParam(name = "password") String password, RedirectAttributes redirectAttributes) {
         User user = new User(name, email, password);
-        List<String> s= Validator.validUserFields(user);
-        if (s.size()!=0) {
-            redirectAttributes.addAttributes("message",s);
+        List<String> s = Validator.validUserFields(user);
+        if (s.size() != 0) {
+            redirectAttributes.addAttributes("message", s);
             return "redirect:register";
         }
-        Set<Role> roles= new HashSet<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(Role.USER);
         user.setRoles(roles).setPassword(PasswordEncoder.encode(user.getPassword()));
-        UserRepository userRepository= new UserRepository();
+        UserRepository userRepository = new UserRepository();
         try {
             userRepository.save(user);
-        } catch (Exception e){
+        } catch (Exception e) {
             s.add("User_already_exist");
-            redirectAttributes.addAttributes("message",s);
+            redirectAttributes.addAttributes("message", s);
             userRepository.close();
             return "redirect:register";
         }
         userRepository.close();
-        logger.debug("User name: "+user.getUsername()+" registered.");
+        logger.debug("User name: " + user.getUsername() + " registered.");
         return "redirect:login";
     }
 

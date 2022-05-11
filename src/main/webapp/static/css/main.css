@@ -8,7 +8,7 @@
 }
 
 
-.myTable{
+.myTable {
     position: absolute;
     border-radius: 7px;
     top: 55%;
@@ -16,10 +16,12 @@
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
+
 .myTable:hover {
     box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.8);
     background-color: rgba(0, 0, 0, 0.4);
 }
+
 .slider {
     width: 100%;
     height: 100vh;
@@ -63,12 +65,14 @@
     color: #fff;
     font-size: 30px;
 }
-.title{
+
+.title {
     padding: 0 170px;
     text-align: center;
     color: #fff;
     font-size: 30px;
 }
+
 .slider [class*="ctrl"] {
     position: absolute;
     top: 50%;
@@ -90,11 +94,11 @@
 .slItem.active {
     opacity: 1;
     visibility: visible;
-    transform: translate3d(0,0,0);
-    -webkit-transform: translate3d(0,0,0);
-    -moz-transform: translate3d(0,0,0);
-    -o-transform: translate3d(0,0,0);
-    -ms-transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
 }
 
 .next, .prev {
@@ -108,45 +112,45 @@
 .slItem.nextItem {
     opacity: 1;
     visibility: visible;
-    transform: translate3d(100%,0, 0);
-    -webkit-transform: translate3d(100%,0,0);
-    -moz-transform: translate3d(100%,0,0);
-    -o-transform: translate3d(100%,0,0);
-    -ms-transform: translate3d(100%,0,0);
+    transform: translate3d(100%, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
+    -moz-transform: translate3d(100%, 0, 0);
+    -o-transform: translate3d(100%, 0, 0);
+    -ms-transform: translate3d(100%, 0, 0);
 }
 
 .slItem.nextItem.next, .slItem.prevItem.prev {
-    transform: translate3d(0,0);
-    -webkit-transform: translate3d(0,0,0);
-    -moz-transform: translate3d(0,0,0);
-    -o-transform: translate3d(0,0,0);
-    -ms-transform: translate3d(0,0,0);
+    transform: translate3d(0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
 }
 
 .slItem.active.next {
-    transform: translate3d(-100%,0,0);
-    -webkit-transform: translate3d(-100%,0,0);
-    -moz-transform: translate3d(-100%,0,0);
-    -o-transform: translate3d(-100%,0,0);
-    -ms-transform: translate3d(-100%,0,0);
+    transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+    -moz-transform: translate3d(-100%, 0, 0);
+    -o-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
 }
 
 .slItem.prevItem {
     opacity: 1;
     visibility: visible;
-    transform: translate3d(-100%,0,0);
-    -webkit-transform: translate3d(-100%,0,0);
-    -moz-transform: translate3d(-100%,0,0);
-    -o-transform: translate3d(-100%,0,0);
-    -ms-transform: translate3d(-100%,0,0);
+    transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+    -moz-transform: translate3d(-100%, 0, 0);
+    -o-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
 }
 
 .slItem.active.prev {
-    transform: translate3d(100%,0,0);
-    -webkit-transform: translate3d(100%,0,0);
-    -moz-transform: translate3d(100%,0,0);
-    -o-transform: translate3d(100%,0,0);
-    -ms-transform: translate3d(100%,0,0);
+    transform: translate3d(100%, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
+    -moz-transform: translate3d(100%, 0, 0);
+    -o-transform: translate3d(100%, 0, 0);
+    -ms-transform: translate3d(100%, 0, 0);
 }
 
 .slDots {
@@ -156,7 +160,7 @@
     transform: translate(-50%, 0);
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
-    -o-transform: translate(-50%,  0);
+    -o-transform: translate(-50%, 0);
     -ms-transform: translate(-50%, 0);
 }
 
@@ -181,7 +185,6 @@
 }
 
 
-
 /*My CSS*/
 
 .d2 {
@@ -190,7 +193,7 @@
     top: 5%;
     left: 4%;
     width: 550px;
-    height:250px;
+    height: 250px;
     z-index: 2;
     /*display: block;*/
     background: #DABB52;
@@ -199,18 +202,21 @@
     font-size: 20px;
     font-weight: bold;
 }
+
 .d2 input, .d2 button {
     border: none;
     outline: none;
     border-radius: 3px;
 
 }
+
 .d2 input[type=text] {
     width: 100%;
     height: 42px;
     background: #F9F0DA;
     padding-left: 15px;
 }
+
 .d2 button {
     height: 26px;
     width: 26px;
@@ -220,6 +226,7 @@
     background: #F15B42;
     cursor: pointer;
 }
+
 .d2 button:before {
     content: "\f105";
     font-family: FontAwesome;
@@ -227,18 +234,21 @@
     font-size: 20px;
     font-weight: bold;
 }
-.choose{
+
+.choose {
     position: relative;
     width: 100%;
     top: 8px;
     left: 8px;
 }
-.date{
+
+.date {
     position: absolute;
     width: 100%;
     top: 0px;
     left: 180px;
 }
+
 /*.session{*/
 /*    position: absolute;*/
 /*    width: 100%;*/
@@ -252,7 +262,7 @@
 /*    left: 150px;*/
 /*}*/
 
-.d2 input[type=checkbox]  ,.d2 input[type=radio]{
+.d2 input[type=checkbox], .d2 input[type=radio] {
     width: 42px;
     height: 42px;
     background: #F9F0DA;

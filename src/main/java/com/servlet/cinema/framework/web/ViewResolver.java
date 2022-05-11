@@ -11,9 +11,10 @@ import java.io.IOException;
 public class ViewResolver {
     /**
      * Resolve the given view by name.
-     * @param view - name of the view to resolve.
+     *
+     * @param view  - name of the view to resolve.
      * @param model - model for current request.
-     * @param rA - redirectAttributes for current request.
+     * @param rA    - redirectAttributes for current request.
      */
     static void processView(String view, Model model, RedirectAttributes rA) throws ServletException, IOException {
         if (view.equals("HttpStatus.bad"))

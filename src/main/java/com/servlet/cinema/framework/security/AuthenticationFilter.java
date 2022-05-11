@@ -1,7 +1,5 @@
 package com.servlet.cinema.framework.security;
 
-import com.servlet.cinema.application.entities.User;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +26,7 @@ public class AuthenticationFilter implements Filter {
         } else authorities = new HashSet<>(user.getAuthorities());
         if (SecurityManager.hasAccess(request, authorities)) {
             filterChain.doFilter(request, response);
-        } else response.sendRedirect((user==null)?"/cinema/login":"/cinema/error403");
+        } else response.sendRedirect((user == null) ? "/cinema/login" : "/cinema/error403");
     }
 
     @Override

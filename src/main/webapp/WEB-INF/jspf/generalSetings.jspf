@@ -1,4 +1,3 @@
-
 <%--===========================================================================
 Page directive. Sets the content type and encoding.
 Encoding of the response: UTF-8

@@ -29,7 +29,8 @@
         <a href="/cinema/login"><img class="hbtn" src="../../static/img/login.png"></a>
     </sec:authorize>
     <sec:authorize authority="Authenticated">
-        <form action="/cinema/logout" method="post"><input type="image" img class="hbtn" src="../../static/img/logout.png">
+        <form action="/cinema/logout" method="post"><input type="image" img class="hbtn"
+                                                           src="../../static/img/logout.png">
         </form>
     </sec:authorize>
     <div class="lang_buttons">

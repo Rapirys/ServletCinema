@@ -2,23 +2,20 @@ package com.servlet.cinema.framework.data;
 
 
 import com.servlet.cinema.framework.Util.AppContext;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Properties;
 
-
-import static com.servlet.cinema.framework.Util.AppContext.servletContextEvent;
+import static java.lang.Thread.State.WAITING;
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+
 
 class ConnectionPoolTest {
     @BeforeAll
@@ -48,7 +45,6 @@ class ConnectionPoolTest {
             connectionPool.close(connections.get(i));
 
         assertEquals(5, connectionPool.getSize());
-
     }
 
     @Test
@@ -61,20 +57,24 @@ class ConnectionPoolTest {
         }
         Thread thread = new Thread(() -> {
             Connection connection = ConnectionPool.getInstance().getConnection();
-            System.out.println(connection);
             ConnectionPool.getInstance().close(connection);
         });
 
         thread.start();
-        connectionPool.close(connections.get(ConnectionPool.MAX_CAPACITY-1));
+        sleep(1000);
+        assertEquals(WAITING, thread.getState(),
+                """
+                        Tread isn't waiting, it have got connection without permission or
+                        the stream didn't start waiting for a long time""");
+        connectionPool.close(connections.get(ConnectionPool.MAX_CAPACITY - 1));
         thread.join(2000);
         boolean fail = false;
-        if(thread.isAlive()) {
+        if (thread.isAlive()) {
             thread.interrupt();
-            fail=true;
+            fail = true;
         }
-        for (int i = 0; i < ConnectionPool.MAX_CAPACITY-1; i++)
+        for (int i = 0; i < ConnectionPool.MAX_CAPACITY - 1; i++)
             connectionPool.close(connections.get(i));
-        assertFalse(fail,"Deadlock or problem with DB");
+        assertFalse(fail, "Deadlock or problem with DB");
     }
 }

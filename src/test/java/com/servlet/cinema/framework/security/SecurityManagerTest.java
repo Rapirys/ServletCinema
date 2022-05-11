@@ -1,7 +1,6 @@
 package com.servlet.cinema.framework.security;
 
 
-import com.servlet.cinema.application.entities.Session;
 import com.servlet.cinema.application.entities.User;
 import com.servlet.cinema.framework.web.Model;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class SecurityManagerTest {
@@ -25,7 +24,7 @@ class SecurityManagerTest {
         user.setUsername("Lore");
         SecurityManager.addUserToSession(model, user);
 
-        verify(session,times(1) ).setAttribute("user", user);
+        verify(session, times(1)).setAttribute("user", user);
     }
 
     @Test
@@ -37,7 +36,7 @@ class SecurityManagerTest {
         when(session.getAttribute("user")).thenReturn(user);
         when(request.getSession()).thenReturn(session);
 
-        assertEquals(SecurityManager.getUserFromSession(request),user);
+        assertEquals(SecurityManager.getUserFromSession(request), user);
 
     }
 
@@ -48,7 +47,7 @@ class SecurityManagerTest {
         user.setUsername("aaaa");
         when(session.getAttribute("user")).thenReturn(user);
 
-        assertEquals(SecurityManager.getUserFromSession(session),user);
+        assertEquals(SecurityManager.getUserFromSession(session), user);
     }
 
     @Test

@@ -9,7 +9,6 @@ import com.servlet.cinema.framework.exaptions.ControllerNotExist;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 
-
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -21,6 +20,7 @@ import java.util.Set;
  * annotated with @Controller.
  * DispatcherServlet uses this class to delegate request processing
  * to methods defined in controllers and annotated with @GetMapping or @PostMapping
+ *
  * @see Controller
  * @see GetMapping
  * @see PostMapping
@@ -30,13 +30,13 @@ import java.util.Set;
 public class HandlerMapping {
     private final static Logger logger = Logger.getLogger(HandlerMapping.class);
     /**
-     Map of GET http request URL to methods,
-     which responsible for their processing.
+     * Map of GET http request URL to methods,
+     * which responsible for their processing.
      */
     private final Map<String, Pair<Method, Object>> getRequests = new HashMap<>();
     /**
-     Map of POST http request URL to methods,
-     which responsible for their processing.
+     * Map of POST http request URL to methods,
+     * which responsible for their processing.
      */
     private final Map<String, Pair<Method, Object>> postRequests = new HashMap<>();
 
@@ -56,7 +56,7 @@ public class HandlerMapping {
         logger.debug("Beginning method assembly");
         Reflections reflections = new Reflections(AppContext.appClass.getPackage().getName());
         Set<Class<?>> controllers = reflections.getTypesAnnotatedWith(Controller.class);
-        logger.debug("Detected controllers:" + controllers.toString() );
+        logger.debug("Detected controllers:" + controllers.toString());
         initGet(controllers);
         initPost(controllers);
 
@@ -65,6 +65,7 @@ public class HandlerMapping {
     /**
      * Initialising a map of http request URL to methods,
      * annotated @GetMapping declared inside controllers class.
+     *
      * @param controllers set of class, annotated with @Controller
      */
     private void initGet(Set<Class<?>> controllers) {
@@ -72,11 +73,11 @@ public class HandlerMapping {
             Reflections reflectCont = new Reflections(controller.getPackage().getName());
             Method[] methods = controller.getMethods();
             try {
-                int i=0;
+                int i = 0;
                 for (Method method : methods) {
                     if (method.isAnnotationPresent(GetMapping.class))
                         getRequests.put(method.getAnnotation(GetMapping.class).path(),
-                                new Pair<Method, Object>(method, controller.getDeclaredConstructor().newInstance()));
+                                new Pair<>(method, controller.getDeclaredConstructor().newInstance()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,6 +88,7 @@ public class HandlerMapping {
     /**
      * Initialising a map of http request URL to methods,
      * annotated @PostMapping declared inside controllers class.
+     *
      * @param controllers set of class, annotated with @Controller
      */
     private void initPost(Set<Class<?>> controllers) {
@@ -97,7 +99,7 @@ public class HandlerMapping {
                 for (Method method : methods) {
                     if (method.isAnnotationPresent(PostMapping.class))
                         postRequests.put(method.getAnnotation(PostMapping.class).path(),
-                                new Pair<Method, Object>(method, controller.getDeclaredConstructor().newInstance()));
+                                new Pair<>(method, controller.getDeclaredConstructor().newInstance()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -113,33 +115,36 @@ public class HandlerMapping {
         return postRequests;
     }
 
-    public Pair<Method,Object> getGet(String path){
+    public Pair<Method, Object> getGet(String path) {
         if (!getRequests.containsKey(path)) {
-            logger.warn("Controller for path: "+ path +" not Exist");
-            throw new ControllerNotExist("Controller fo path: "+ path +" not Exist");
+            logger.warn("Controller for path: " + path + " not Exist");
+            throw new ControllerNotExist("Controller fo path: " + path + " not Exist");
         }
         return getRequests.get(path);
     }
-    public Pair<Method,Object> getGet(HttpServletRequest request){
-        String path=request.getRequestURI();
+
+    public Pair<Method, Object> getGet(HttpServletRequest request) {
+        String path = request.getRequestURI();
         if (!getRequests.containsKey(path)) {
-            logger.warn("Controller for path: "+ path +" not Exist");
-            throw new ControllerNotExist("Controller fo path: "+ path +" not Exist");
+            logger.warn("Controller for path: " + path + " not Exist");
+            throw new ControllerNotExist("Controller fo path: " + path + " not Exist");
         }
         return getRequests.get(path);
     }
-    public Pair<Method,Object> getPost(String path){
+
+    public Pair<Method, Object> getPost(String path) {
         if (!postRequests.containsKey(path)) {
-            logger.error("Controller for path: "+ path +" not Exist");
-            throw new ControllerNotExist("Controller for path: "+ path +" not Exist");
+            logger.error("Controller for path: " + path + " not Exist");
+            throw new ControllerNotExist("Controller for path: " + path + " not Exist");
         }
         return postRequests.get(path);
     }
-    public Pair<Method,Object> getPost(HttpServletRequest request) throws ControllerNotExist {
-        String path=request.getRequestURI();
+
+    public Pair<Method, Object> getPost(HttpServletRequest request) throws ControllerNotExist {
+        String path = request.getRequestURI();
         if (!postRequests.containsKey(path)) {
-            logger.error("Controller fo path: "+ path +" not Exist");
-            throw new ControllerNotExist("Controller fo path: "+ path +" not Exist");
+            logger.error("Controller fo path: " + path + " not Exist");
+            throw new ControllerNotExist("Controller fo path: " + path + " not Exist");
         }
         return postRequests.get(path);
     }

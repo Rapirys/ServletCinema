@@ -1,7 +1,6 @@
 package com.servlet.cinema.application.controller;
 
 
-
 import com.servlet.cinema.application.entities.Order;
 import com.servlet.cinema.application.entities.Session;
 import com.servlet.cinema.application.entities.Ticket;
@@ -13,14 +12,12 @@ import com.servlet.cinema.application.model.service.Hall.Place;
 import com.servlet.cinema.application.model.service.OrderManager.OrderManager;
 import com.servlet.cinema.application.model.service.Validator;
 import com.servlet.cinema.framework.annotation.*;
-import com.servlet.cinema.framework.web.Model;
 import com.servlet.cinema.framework.security.SecurityManager;
+import com.servlet.cinema.framework.web.Model;
 import com.servlet.cinema.framework.web.RedirectAttributes;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,12 +54,12 @@ public class OrderController {
     public String order(@RequestParam(name = "data") String data,
                         @RequestParam(name = "session_id") Long id,
                         HttpServletRequest request,
-                        HttpServletResponse response){
+                        HttpServletResponse response) {
         User user = SecurityManager.getUserFromSession(request);
         Long orderId = null;
-        if (user!=null)
-                orderId=orderManager.book(List.of(data.split(",")),id,user);
-        if (orderId!=null){
+        if (user != null)
+            orderId = orderManager.book(List.of(data.split(",")), id, user);
+        if (orderId != null) {
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
             try {
@@ -74,13 +71,14 @@ public class OrderController {
             return "HttpStatus.ok";
         } else return "HttpStatus.bad";
     }
+
     @PreAuthorize("USER")
     @GetMapping(path = "/cinema/order")
     public String payment(@RequestParam(name = "id") Long id,
                           HttpServletRequest request,
-                          Model model){
+                          Model model) {
         OrderRepository orderRepository = new OrderRepository();
-        Optional<Order> o=orderRepository.findById(id);
+        Optional<Order> o = orderRepository.findById(id);
         orderRepository.close();
         Order order;
         if (o.isPresent())
@@ -91,7 +89,7 @@ public class OrderController {
             return "redirect:/cinema";
         if (order.isActive())
             return "orderOld.jsp";
-        TicketRepository ticketRepository= new TicketRepository();
+        TicketRepository ticketRepository = new TicketRepository();
         order.setTickets(ticketRepository.findTicketsByOrder(order));
         ticketRepository.close();
 
@@ -142,8 +140,8 @@ public class OrderController {
     @PreAuthorize("USER")
     @GetMapping(path = "/cinema/downloadOrder")
     public String getFile(@RequestParam(name = "id") Long id,
-                        HttpServletRequest request,
-                        HttpServletResponse response) {
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
         OrderRepository orderRepository = new OrderRepository();
         Optional<Order> o = orderRepository.findById(id);
         orderRepository.close();
@@ -161,7 +159,7 @@ public class OrderController {
             orderManager.getPdf(order, response.getOutputStream());
             response.getOutputStream().flush();
         } catch (Exception e) {
-            throw new RuntimeException("IOError writing file to output stream",e);
+            throw new RuntimeException("IOError writing file to output stream", e);
         }
         return "HttpStatus.ok";
     }

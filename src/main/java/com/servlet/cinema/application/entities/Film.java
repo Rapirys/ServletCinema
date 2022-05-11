@@ -2,7 +2,6 @@ package com.servlet.cinema.application.entities;
 
 
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.Objects;
 
 
@@ -11,21 +10,21 @@ public class Film {
     private String titleRu;
     private String titleEn;
     private Duration duration;
-    private boolean boxOffice =true;
+    private boolean boxOffice = true;
 
 
-    public String getTitleLocale(String locale){
-        return (locale.equals("en"))?getTitleEn():getTitleRu();
+    public String getTitleLocale(String locale) {
+        return (locale.equals("en")) ? getTitleEn() : getTitleRu();
     }
-    public String getFormatDuration(){
-        return String.format("%02d",duration.toHours())+':'+String.format("%02d",duration.toMinutesPart());
+
+    public String getFormatDuration() {
+        return String.format("%02d", duration.toHours()) + ':' + String.format("%02d", duration.toMinutesPart());
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Film)) return false;
-        Film films = (Film) o;
+        if (!(o instanceof Film films)) return false;
         return film_id.equals(films.film_id) && titleRu.equals(films.titleRu) && titleEn.equals(films.titleEn);
     }
 

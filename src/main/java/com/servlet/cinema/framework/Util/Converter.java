@@ -36,6 +36,7 @@ public class Converter {
 
     /**
      * Converts strings in an object.
+     *
      * @param p the string to convert.
      * @param c the class of the object to convert the string to.
      * @return the object of class c corresponding to the string p.

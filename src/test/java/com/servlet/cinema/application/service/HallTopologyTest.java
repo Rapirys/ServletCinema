@@ -3,13 +3,10 @@ package com.servlet.cinema.application.service;
 
 import com.servlet.cinema.application.entities.Ticket;
 import com.servlet.cinema.application.model.service.Hall.HallTopology;
-
 import com.servlet.cinema.application.model.service.Hall.Place;
 import com.servlet.cinema.framework.Util.AppContext;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -36,34 +33,33 @@ class HallTopologyTest {
 
     @Test
     void getCopyTopology() {
-        ArrayList<ArrayList<Place>>  topology= HallTopology.getInstance().getCopyTopology();
-        for (int i=0; i<topology.size(); i++)
-            for (int j=0; j<topology.get(i).size(); j++)
+        ArrayList<ArrayList<Place>> topology = HallTopology.getInstance().getCopyTopology();
+        for (int i = 0; i < topology.size(); i++)
+            for (int j = 0; j < topology.get(i).size(); j++)
                 assertThat(topology.get(i).get(j)).isEqualTo(HallTopology.getInstance().topology.get(i).get(j));
     }
 
     @Test
     void GetCopyTopologyByTickets() {
-        List<Ticket> tickets =new ArrayList<>();
+        List<Ticket> tickets = new ArrayList<>();
 
-        for (int i=0; i<HallTopology.getInstance().topology.size(); i+=2){
-            for (int j=0; j<HallTopology.getInstance().topology.get(i).size(); j+=2) {
+        for (int i = 0; i < HallTopology.getInstance().topology.size(); i += 2) {
+            for (int j = 0; j < HallTopology.getInstance().topology.get(i).size(); j += 2) {
                 if (HallTopology.getInstance().topology.get(i).get(j).type.equals('#')) {
                     Ticket ticket = new Ticket();
-                    Place p=HallTopology.getInstance().topology.get(i).get(j);
+                    Place p = HallTopology.getInstance().topology.get(i).get(j);
                     ticket.setRow(p.row);
                     ticket.setPlace(p.place);
                     tickets.add(ticket);
                 }
             }
         }
-        ArrayList<ArrayList<Place>>  topology= HallTopology.getInstance().getCopyTopology(tickets);
-        for (int i=0; i<HallTopology.getInstance().topology.size(); i++){
-            for (int j=0; j<HallTopology.getInstance().topology.get(i).size(); j++) {
-                if (i%2==0 && j%2==0 && HallTopology.getInstance().topology.get(i).get(j).type.equals('#')) {
+        ArrayList<ArrayList<Place>> topology = HallTopology.getInstance().getCopyTopology(tickets);
+        for (int i = 0; i < HallTopology.getInstance().topology.size(); i++) {
+            for (int j = 0; j < HallTopology.getInstance().topology.get(i).size(); j++) {
+                if (i % 2 == 0 && j % 2 == 0 && HallTopology.getInstance().topology.get(i).get(j).type.equals('#')) {
                     assertThat(topology.get(i).get(j).type).isEqualTo('X');
-                }
-                else  assertThat(topology.get(i).get(j)).isEqualTo(HallTopology.getInstance().topology.get(i).get(j));
+                } else assertThat(topology.get(i).get(j)).isEqualTo(HallTopology.getInstance().topology.get(i).get(j));
             }
         }
     }

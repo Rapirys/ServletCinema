@@ -1,6 +1,6 @@
 <%--@elvariable id="lang" type="String"--%>
 <%@include file="/WEB-INF/jspf/generalSetings.jspf" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +39,7 @@
                     <a href="/cinema/admin/session" class="btn btn-primary"><i class="material-icons">&#xE863;</i>
                         <span>${lang.gL("Session")}</span></a>
                     <form action="@{/logout}" method="post"><input type="image" img class="hbtn"
-                                                                      src="../../static/img/logout.png"></form>
+                                                                   src="../../static/img/logout.png"></form>
                     <div class="lang_buttons">
                         <input type="image" onclick="swap_len()" class="hbtn" src="../../static/img/lang.png"
                                alt="lang">
@@ -90,8 +90,8 @@
                         <div class="show-entries">
                             <span>Show</span>
                             <select name="quantity" class="form-control">
-                                <c:forEach var = "i" items="5,10,15,20">
-                                 <option value="${i}" ${i==quantity?"selected":""}> ${i} </option>
+                                <c:forEach var="i" items="5,10,15,20">
+                                    <option value="${i}" ${i==quantity?"selected":""}> ${i} </option>
                                 </c:forEach>
                             </select>
                             <span>entries</span>
@@ -182,7 +182,7 @@
         <script>
             function delete_film(id1) {
                 $.get("/cinema/admin/film/delete?id=" + id1, function (data) {
-                   /* document.getElementById(id2+1).remove();*/
+                    /* document.getElementById(id2+1).remove();*/
                     location.reload()
                 })
             }
@@ -194,7 +194,7 @@
             }
         </script>
         <%
-            pageContext.setAttribute("url", request.getAttribute("javax.servlet.forward.request_uri")+"?"+request.getQueryString());
+            pageContext.setAttribute("url", request.getAttribute("javax.servlet.forward.request_uri") + "?" + request.getQueryString());
         %>
         <div class="clearfix">
             <ul class="pagination">
@@ -214,7 +214,7 @@
                     <a href="<c:url value = "${url}">
                               <c:param name = "page" value ="${page+1}"/>
                              </c:url>">
-                    ${lang.gL("Next")}
+                        ${lang.gL("Next")}
                     </a>
                 </li>
             </ul>

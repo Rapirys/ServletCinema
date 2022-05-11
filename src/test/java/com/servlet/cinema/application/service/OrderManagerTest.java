@@ -15,7 +15,6 @@ import com.servlet.cinema.application.model.service.Hall.Place;
 import com.servlet.cinema.application.model.service.OrderManager.OrderManager;
 import com.servlet.cinema.application.model.service.OrderManager.OrderNotExist;
 import com.servlet.cinema.framework.Util.AppContext;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
@@ -30,7 +29,8 @@ import java.util.*;
 
 import static com.itextpdf.text.pdf.parser.PdfTextExtractor.getTextFromPage;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class OrderManagerTest {
@@ -70,9 +70,7 @@ class OrderManagerTest {
         LinkedList<Ticket> tickets = new LinkedList<>();
         tickets.add(new Ticket());
         try (MockedConstruction<TicketRepository> mocked
-                     = mockConstruction(TicketRepository.class, (mock, context) -> {
-            when(mock.getHallBySession(1L)).thenReturn(tickets);
-        })) {
+                     = mockConstruction(TicketRepository.class, (mock, context) -> when(mock.getHallBySession(1L)).thenReturn(tickets))) {
             Session session = new Session();
             session.setSession_id(1L);
 
@@ -113,9 +111,7 @@ class OrderManagerTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try (MockedConstruction<TicketRepository> mocked = mockConstruction(TicketRepository.class,
-                (mock, context) -> {
-                    when(mock.findTicketsByOrder(order)).thenReturn(tickets);
-                })) {
+                (mock, context) -> when(mock.findTicketsByOrder(order)).thenReturn(tickets))) {
             orderManager.getPdf(order, outputStream);
         }
         InputStream inStream = new ByteArrayInputStream(outputStream.toByteArray());
@@ -140,14 +136,10 @@ class OrderManagerTest {
                 }
         ); MockedConstruction<SessionRepository> mocked2 = mockConstruction(SessionRepository.class)) {
 
-            assertThrows(OrderNotExist.class, () -> {
-                orderManager.submit(0L);
-            });
+            assertThrows(OrderNotExist.class, () -> orderManager.submit(0L));
 
 
-            assertThrows(OrderNotExist.class, () -> {
-                orderManager.submit(1L);
-            });
+            assertThrows(OrderNotExist.class, () -> orderManager.submit(1L));
         }
 
     }

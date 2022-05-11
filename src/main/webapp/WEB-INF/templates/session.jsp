@@ -1,6 +1,6 @@
 <%--@elvariable id="lang" type="String"--%>
 <%@include file="/WEB-INF/jspf/generalSetings.jspf" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <c:set var="now" value="<%=new java.util.Date()%>" />
+        <c:set var="now" value="<%=new java.util.Date()%>"/>
         <div class="table-filter">
             <form method="post" action="/cinema/admin/session/add">
                 <div class="row">
@@ -86,10 +86,12 @@
                             <input type="time" class="form-control" name="time" required>
                         </div>
                         <label text="${lang.gL("From")}">From</label>
-                        <input name="date1" type="date" value="<fmt:formatDate type = "date" value = "${now}" pattern = "yyyy-MM-dd" />"
+                        <input name="date1" type="date"
+                               value="<fmt:formatDate type = "date" value = "${now}" pattern = "yyyy-MM-dd" />"
                                min="<fmt:formatDate type = "date" value = "${now}" pattern = "yyyy-MM-dd"  />">
                         <label text="${lang.gL("To")}">To</label>
-                        <input name="date2" type="date" value="<fmt:formatDate type = "date" value = "${now}" pattern = "yyyy-MM-dd"  />"
+                        <input name="date2" type="date"
+                               value="<fmt:formatDate type = "date" value = "${now}" pattern = "yyyy-MM-dd"  />"
                                min="<fmt:formatDate type = "date" value = "${now}" pattern = "yyyy-MM-dd"  />">
                     </div>
                 </div>
@@ -217,7 +219,7 @@
         <script>
             function delete_session(id1) {
                 $.get("/cinema/admin/session/delete?id=" + id1, function (data) {
-                   // document.getElementById(id2).remove();
+                    // document.getElementById(id2).remove();
                     location.reload()
                 })
             }</script>

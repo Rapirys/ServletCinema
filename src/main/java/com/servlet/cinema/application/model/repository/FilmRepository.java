@@ -1,7 +1,6 @@
 package com.servlet.cinema.application.model.repository;
 
 import com.servlet.cinema.application.entities.Film;
-import com.servlet.cinema.application.entities.Session;
 import com.servlet.cinema.framework.data.ConnectionPool;
 import com.servlet.cinema.framework.data.Dao;
 import com.servlet.cinema.framework.data.Pageable;
@@ -9,7 +8,6 @@ import com.servlet.cinema.framework.data.Sort;
 import com.servlet.cinema.framework.exaptions.ConnectionPoolException;
 import com.servlet.cinema.framework.exaptions.RepositoryException;
 import org.apache.log4j.Logger;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +36,7 @@ public class FilmRepository extends Dao {
             ResultSet resultSet = preparedStatement.executeQuery();
             initFilmList(resultSet, filmSet);
         } catch (SQLException e) {
-            throw new RepositoryException("Can't find film",e);
+            throw new RepositoryException("Can't find film", e);
         }
         return filmSet;
     }
@@ -57,7 +55,7 @@ public class FilmRepository extends Dao {
             initFilmList(resultSet, filmSet);
         } catch (SQLException e) {
             logger.error("Can't find film");
-            throw new RepositoryException("Can't find film",e);
+            throw new RepositoryException("Can't find film", e);
         }
         return filmSet;
     }
@@ -73,7 +71,7 @@ public class FilmRepository extends Dao {
             initFilmList(resultSet, filmSet);
         } catch (SQLException e) {
             logger.error("Can't find film");
-            throw new RepositoryException("Can't find film",e);
+            throw new RepositoryException("Can't find film", e);
         }
         return filmSet;
     }
@@ -81,6 +79,7 @@ public class FilmRepository extends Dao {
 
     private final static String findByBoxOfficeTrueOrderByTitleEn =
             "SELECT * FROM film f WHERE f.box_office = true ORDER BY f.title_en";
+
     public List<Film> findByBoxOfficeTrueOrderByTitleEn() {
         ArrayList<Film> filmSet = new ArrayList<>();
         try {
@@ -89,7 +88,7 @@ public class FilmRepository extends Dao {
             initFilmList(resultSet, filmSet);
         } catch (SQLException e) {
             logger.error("Can't find film");
-            throw new RepositoryException("Can't find film",e);
+            throw new RepositoryException("Can't find film", e);
         }
         return filmSet;
     }
@@ -115,6 +114,7 @@ public class FilmRepository extends Dao {
 
     private final static String save =
             "INSERT INTO film (box_office,duration,title_en,title_ru) VALUES (?, ?, ?, ?) RETURNING film_id";
+
     public Film save(Film entity) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(save);
@@ -147,7 +147,7 @@ public class FilmRepository extends Dao {
                 filmO = Optional.of(initFilm(resultSet));
         } catch (SQLException e) {
             logger.error("Can't find film");
-            throw new RepositoryException("Can't find film",e);
+            throw new RepositoryException("Can't find film", e);
         }
         return filmO;
     }
@@ -173,15 +173,20 @@ public class FilmRepository extends Dao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Can't delete film");
-            throw new RepositoryException("Can't delete film",e);
+            throw new RepositoryException("Can't delete film", e);
         }
     }
 
-    public FilmRepository() {connection = ConnectionPool.getInstance().getConnection();}
+    public FilmRepository() {
+        connection = ConnectionPool.getInstance().getConnection();
+    }
+
     private FilmRepository(Connection connection) {
         this.connection = connection;
     }
-    public static FilmRepository bound(Dao dao){
+
+    public static FilmRepository bound(Dao dao) {
         return new FilmRepository(dao.connection);
-    };
+    }
+
 }

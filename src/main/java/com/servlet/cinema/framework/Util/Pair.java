@@ -3,6 +3,7 @@ package com.servlet.cinema.framework.Util;
 
 /**
  * A tuple of things.
+ *
  * @param <S> Type of the first thing.
  * @param <T> Type of the second thing.
  */
@@ -26,7 +27,7 @@ public final class Pair<S, T> {
     }
 
     public static <S, T> Pair<S, T> of(S first, T second) {
-        return new Pair(first, second);
+        return new Pair<S, T>(first, second);
     }
 
     public S getFirst() {

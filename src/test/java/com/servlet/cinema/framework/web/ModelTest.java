@@ -15,11 +15,11 @@ public class ModelTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         Model model = new Model(request, response);
-        model.addAttribute("IntegerValue1", Integer.valueOf(1));
+        model.addAttribute("IntegerValue1", 1);
         model.addAttribute("StringValue1", Integer.valueOf("1"));
         model.merge();
-        verify(request).setAttribute("IntegerValue1",Integer.valueOf(1));
+        verify(request).setAttribute("IntegerValue1", 1);
         verify(request).setAttribute("StringValue1", Integer.valueOf("1"));
-        verify(request,atMost(2)).setAttribute(any(),any());
+        verify(request, atMost(2)).setAttribute(any(), any());
     }
 }

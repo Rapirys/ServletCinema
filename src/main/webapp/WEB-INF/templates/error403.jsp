@@ -14,10 +14,12 @@
             height: 100%;
             margin: 0;
         }
+
         * {
             font-family: 'Press Start 2P', cursive;
             box-sizing: border-box;
         }
+
         #app {
             padding: 1rem;
             background: black;
@@ -30,9 +32,11 @@
             font-size: 6rem;
             flex-direction: column;
         }
+
         #app .txt {
             font-size: 1.8rem;
         }
+
         @keyframes blink {
             0% {
                 opacity: 0;
@@ -47,6 +51,7 @@
                 opacity: 1;
             }
         }
+
         .blink {
             animation-name: blink;
             animation-duration: 1s;
@@ -58,7 +63,7 @@
 <body>
 <div id="app">
     <div>403</div>
-    <div class="txt" >
+    <div class="txt">
         <label>${lang.gL("Forbidde")}<span class="blink">_</span>
     </div>
 </div>

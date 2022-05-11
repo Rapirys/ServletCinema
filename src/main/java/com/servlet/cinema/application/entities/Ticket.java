@@ -1,7 +1,6 @@
 package com.servlet.cinema.application.entities;
 
 
-
 import java.util.Objects;
 import java.util.Random;
 
@@ -12,16 +11,16 @@ public class Ticket {
 
     private Long order_id;
     private Long session_id;
-    private int  place;
+    private int place;
     private int row;
     private Long salt;
 
     public Ticket(int row, int place, Long order_id, Long session_id) {
         this.place = place;
         this.row = row;
-        this.order_id =order_id;
-        this.session_id =session_id;
-        this.salt=new Random().nextLong();
+        this.order_id = order_id;
+        this.session_id = session_id;
+        this.salt = new Random().nextLong();
     }
 
 

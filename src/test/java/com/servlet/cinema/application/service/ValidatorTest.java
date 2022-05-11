@@ -4,6 +4,7 @@ package com.servlet.cinema.application.service;
 import com.servlet.cinema.application.entities.User;
 import com.servlet.cinema.application.model.service.Validator;
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,31 +14,34 @@ class ValidatorTest {
 
     @Test
     void nullEmail() {
-        assertFalse (Validator.email(null));
+        assertFalse(Validator.email(null));
     }
+
     @Test
     void validEmail() {
-        assertTrue (Validator.email("gregor@gmail.com"));
-        assertTrue (Validator.email("gregordsadasfasfasfa@gmail.com"));
+        assertTrue(Validator.email("gregor@gmail.com"));
+        assertTrue(Validator.email("gregordsadasfasfasfa@gmail.com"));
     }
+
     @Test
     void invalidEmail() {
-        assertFalse (Validator.email("gregor@gmail.commm"));
-        assertFalse (Validator.email("gregor@gmail..com"));
-        assertFalse (Validator.email("gregor@гмаил.com"));
+        assertFalse(Validator.email("gregor@gmail.commm"));
+        assertFalse(Validator.email("gregor@gmail..com"));
+        assertFalse(Validator.email("gregor@гмаил.com"));
     }
+
     @Test
-    void  validPassword(){
-        assertFalse (Validator.password("111Q2"));
-        assertFalse (Validator.password("abcd"));
-        assertTrue (Validator.password("1233456q"));
+    void validPassword() {
+        assertFalse(Validator.password("111Q2"));
+        assertFalse(Validator.password("abcd"));
+        assertTrue(Validator.password("1233456q"));
     }
 
 
     @Test
     void invalidUsername() {
-        assertFalse (Validator.email("TooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongName"));
-        assertFalse (Validator.email("Д"));
+        assertFalse(Validator.email("TooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongName"));
+        assertFalse(Validator.email("Д"));
     }
 
     @Test
@@ -74,34 +78,34 @@ class ValidatorTest {
 
     @Test
     void validCard() {
-        String cardN="1111 1111 1111 1111";
-        String name="Asd Jkc";
-        String cvv="1111";
+        String cardN = "1111 1111 1111 1111";
+        String name = "Asd Jkc";
+        String cvv = "1111";
         Integer y = 2024;
-        Integer m =12;
-        assertTrue(Validator.validCard(cardN, cvv , m, y, name));
+        Integer m = 12;
+        assertTrue(Validator.validCard(cardN, cvv, m, y, name));
 
-        assertFalse(Validator.validCard(cardN, cvv , m, 1000, name));
-        assertFalse(Validator.validCard(cardN, cvv , -10, y, name));
-        assertFalse(Validator.validCard(cardN, "aaa" , m, y, name));
-        assertFalse(Validator.validCard("1234567812345678", cvv , m, y, name));
+        assertFalse(Validator.validCard(cardN, cvv, m, 1000, name));
+        assertFalse(Validator.validCard(cardN, cvv, -10, y, name));
+        assertFalse(Validator.validCard(cardN, "aaa", m, y, name));
+        assertFalse(Validator.validCard("1234567812345678", cvv, m, y, name));
     }
 
     @Test
     void toValidDate() {
-        assertThat(Validator.toValidDate(LocalDate.now().minusDays(7),7)).isEqualTo(LocalDate.now().plusDays(7));
+        assertThat(Validator.toValidDate(LocalDate.now().minusDays(7), 7)).isEqualTo(LocalDate.now().plusDays(7));
     }
 
 
     @Test
     void validUserFields() {
-        User user= new User();
+        User user = new User();
         user.setPassword("12345678q").setEmail("gregor@gmail.com").setUsername("Name");
         assertEquals(0, Validator.validUserFields(user).size());
         user.setPassword("1111");
-        assertTrue(Validator.validUserFields(user).size()!=0);
+        assertTrue(Validator.validUserFields(user).size() != 0);
         user.setPassword("12345678q");
         user.setUsername("NameTooLongggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
-        assertTrue(Validator.validUserFields(user).size()!=0);
+        assertTrue(Validator.validUserFields(user).size() != 0);
     }
 }

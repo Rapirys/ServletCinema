@@ -1,7 +1,6 @@
 package com.servlet.cinema.application.entities;
 
 
-
 import com.servlet.cinema.framework.security.GrantedAuthority;
 import com.servlet.cinema.framework.security.UserDetails;
 
@@ -14,7 +13,7 @@ public class User implements UserDetails {
     private Integer id;
     private String username;
     private String email;
-    private boolean active=true;
+    private boolean active = true;
     String password;
 
     private Set<Role> roles;
@@ -29,17 +28,17 @@ public class User implements UserDetails {
     }
 
     public User(String name, String email, String password) {
-        this.password=password;
-        this.email=email;
-        this.username=name;
+        this.password = password;
+        this.email = email;
+        this.username = name;
     }
 
-    public User(Integer id, String username, String email, boolean activ, String password) {
+    public User(Integer id, String username, String email, boolean active, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.active = active;
-        this.roles = roles;
+
         this.password = password;
     }
 
@@ -58,7 +57,8 @@ public class User implements UserDetails {
 
 
     public User setUsername(String name) {
-        this.username = name; return this;
+        this.username = name;
+        return this;
     }
 
     public String getEmail() {
@@ -66,7 +66,8 @@ public class User implements UserDetails {
     }
 
     public User setEmail(String email) {
-        this.email = email; return this;
+        this.email = email;
+        return this;
     }
 
     public boolean isActive() {
@@ -77,7 +78,6 @@ public class User implements UserDetails {
         this.active = active;
         return this;
     }
-
 
 
     public String getPassword() {
@@ -103,11 +103,11 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-    public boolean hasRole (String roleStr){
+    public boolean hasRole(String roleStr) {
         Role role;
         try {
             role = Role.valueOf(roleStr);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return false;
         }
         return roles.contains(role);

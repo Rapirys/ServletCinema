@@ -7,13 +7,12 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
 import static com.servlet.cinema.framework.web.ViewResolver.processView;
 import static org.mockito.Mockito.*;
 
-public class ViewResolverTest{
+public class ViewResolverTest {
 
     @Test
     public void testProcessViewHttpOk() throws ServletException, IOException {
@@ -21,7 +20,7 @@ public class ViewResolverTest{
         HttpServletResponse response = mock(HttpServletResponse.class);
         Model model = new Model(request, response);
         RedirectAttributes ra = mock(RedirectAttributes.class);
-        processView("HttpStatus.ok",model, ra);
+        processView("HttpStatus.ok", model, ra);
         verify(request, never()).getContextPath();
         verify(response, never()).sendRedirect(any());
         verify(request, never()).getRequestDispatcher(any());
@@ -38,7 +37,7 @@ public class ViewResolverTest{
 
         when(request.getRequestDispatcher(any())).thenReturn(requestDispatcher);
 
-        processView("test.jsp",model, ra);
+        processView("test.jsp", model, ra);
         verify(request, never()).getContextPath();
         verify(response, never()).sendRedirect(any());
         verify(request).getRequestDispatcher("/WEB-INF/templates/test.jsp");

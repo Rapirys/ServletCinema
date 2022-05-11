@@ -4,7 +4,6 @@ import com.servlet.cinema.framework.Util.AppContext;
 import com.servlet.cinema.framework.exaptions.ConnectionPoolException;
 import org.apache.log4j.Logger;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,9 +14,9 @@ import java.util.Stack;
 public final class ConnectionPool {
     public static final int INIT_CAPACITY = 5;
     public static final int MAX_CAPACITY = 30;
-    private static String url;
-    private static String user;
-    private static String password;
+    private static final String url;
+    private static final String user;
+    private static final String password;
     private final static Logger logger = Logger.getLogger(ConnectionPool.class);
     private static final ConnectionPool instance = new ConnectionPool();
     private static final Stack<Connection> connections = new Stack<>();
@@ -35,7 +34,7 @@ public final class ConnectionPool {
             return connection;
         } else if (given < MAX_CAPACITY) {
             try {
-                Connection connection =DriverManager.getConnection(url, user, password);
+                Connection connection = DriverManager.getConnection(url, user, password);
                 given++;
                 return connection;
             } catch (SQLException e) {
@@ -49,7 +48,7 @@ public final class ConnectionPool {
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                throw new ConnectionPoolException("Tread which wait for new connection wos interrupt",e);
+                throw new ConnectionPoolException("Tread which wait for new connection wos interrupt", e);
             }
             return getConnection();
         }
@@ -109,7 +108,7 @@ public final class ConnectionPool {
         }
     }
 
-    public int getSize(){
+    public int getSize() {
         return connections.size();
     }
 }

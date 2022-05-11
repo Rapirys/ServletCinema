@@ -1,7 +1,5 @@
 package com.servlet.cinema.framework.data;
 
-import com.servlet.cinema.application.model.repository.OrderRepository;
-import com.servlet.cinema.application.model.repository.SessionRepository;
 import com.servlet.cinema.framework.exaptions.RepositoryException;
 
 import java.sql.Connection;
@@ -16,7 +14,7 @@ public class Dao {
     public Connection connection;
 
 
-    public void beginTransaction(){
+    public void beginTransaction() {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -25,7 +23,7 @@ public class Dao {
         }
     }
 
-    public void endTransaction(){
+    public void endTransaction() {
         try {
             connection.commit();
             connection.setAutoCommit(true);
@@ -35,7 +33,7 @@ public class Dao {
         }
     }
 
-    public void close(){
+    public void close() {
         ConnectionPool.getInstance().close(connection);
     }
 

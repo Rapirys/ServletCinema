@@ -11,19 +11,19 @@ import java.util.Map;
  * Primarily designed for adding attributes to the model.
  */
 public class Model {
-    public Map <String, Object> attributes;
+    public Map<String, Object> attributes;
     public HttpServletRequest request;
     public HttpServletResponse response;
 
     public Model(HttpServletRequest request, HttpServletResponse response) {
-        this.attributes = new HashMap<String, Object>();
+        this.attributes = new HashMap<>();
         this.request = request;
         this.response = response;
     }
 
     public Object getAttribute(String name) {
         if (attributes.containsKey(name))
-           return attributes.get(name);
+            return attributes.get(name);
         return request.getParameter(name);
     }
 
@@ -35,8 +35,8 @@ public class Model {
     /**
      * Add attributes from model to http response.
      */
-    public void merge(){
-        for(Map.Entry<String, Object> entry: attributes.entrySet()){
+    public void merge() {
+        for (Map.Entry<String, Object> entry : attributes.entrySet()) {
             request.setAttribute(entry.getKey(), entry.getValue());
         }
     }

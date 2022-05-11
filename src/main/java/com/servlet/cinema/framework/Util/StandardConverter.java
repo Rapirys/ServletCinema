@@ -9,8 +9,9 @@ import java.util.function.Function;
 
 /**
  * Describes the "standard converters" as an implementation of functional interfaces
- *
+ * <p>
  * used in the "Converter" class
+ *
  * @see Converter
  */
 public class StandardConverter {
@@ -22,5 +23,5 @@ public class StandardConverter {
     Function<String, LocalDate> localDateC = LocalDate::parse;
     Function<String, LocalTime> localTimeC = LocalTime::parse;
     Function<String, LocalDateTime> localDateTimeC = LocalDateTime::parse;
-    Function<String, Duration> durationC = x-> Duration.between(LocalTime.MIN, LocalTime.parse(x));
+    Function<String, Duration> durationC = x -> Duration.between(LocalTime.MIN, LocalTime.parse(x));
 }

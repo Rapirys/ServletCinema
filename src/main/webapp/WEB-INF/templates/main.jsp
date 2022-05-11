@@ -89,7 +89,6 @@
 <div class="slider" id="slider">
     <div class="slItems">
         <c:forEach var="film" items="${films}" varStatus="i">
-             <%--<div class="slItem" style="background-image: url(../../static/posters/${film.film_id}.jpeg)">--%>
             <div class="slItem" style="background-image: url(/upload/${film.film_id}.jpeg)">
                 <div class="title">
                     <c:set var="title" scope="session" value="${lang.gL('locale')}"/>

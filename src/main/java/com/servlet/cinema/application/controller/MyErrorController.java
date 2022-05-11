@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-public class MyErrorController{
+public class MyErrorController {
     private final static Logger logger = Logger.getLogger(MyErrorController.class);
 
     @GetMapping(path = "/cinema/error")
@@ -20,14 +20,14 @@ public class MyErrorController{
     public String handleError(HttpServletRequest request, Model model) {
         Throwable throwable = (Throwable)
                 request.getAttribute("javax.servlet.error.exception");
-        Integer status = (Integer)request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        if (throwable!=null) {
+        Integer status = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        if (throwable != null) {
             if (throwable.getClass().equals(ControllerNotExist.class))
                 status = 404;
             else logger.error("New error", throwable);
         }
         if (status != null) {
-            if(status.equals(404)) {
+            if (status.equals(404)) {
                 model.addAttribute("message", "Page_not_found");
                 model.addAttribute("error", "404");
                 return "error.jsp";

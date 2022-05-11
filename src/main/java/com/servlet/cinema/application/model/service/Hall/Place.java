@@ -14,9 +14,10 @@ public class Place implements Serializable {
     public int row, place;
     public Character type;
 
-    public Place(){
+    public Place() {
 
     }
+
     public Place(int row, int place, Character type) {
         this.type = type;
         if (type == '#') {
@@ -24,6 +25,7 @@ public class Place implements Serializable {
             this.place = place;
         }
     }
+
     public Place(Place place) {
         this.type = place.type;
         if (type == '#') {
@@ -31,6 +33,7 @@ public class Place implements Serializable {
             this.place = place.place;
         }
     }
+
     public void setType(Character type) {
         this.type = type;
     }
@@ -38,8 +41,7 @@ public class Place implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Place)) return false;
-        Place place1 = (Place) o;
+        if (!(o instanceof Place place1)) return false;
         return row == place1.row && place == place1.place && type.equals(place1.type);
     }
 
