@@ -24,7 +24,7 @@ public class SessionRepository extends Dao {
 
 
     private final static String findAllByTitleEnContains =
-            "SELECT * FROM \"session\" s INNER JOIN film f  ON s.film_id = f.film_id WHERE upper(f.title_en) LIKE ?";
+            "SELECT * FROM \"session\" s INNER JOIN film f  ON s.film_id = f.film_id WHERE UPPER(f.title_en) LIKE UPPER(?)";
 
     public List<Session> findAllByFilmTitleEnContains(String search, Pageable pageable) {
         ArrayList<Session> sessions = new ArrayList<>();
@@ -41,7 +41,7 @@ public class SessionRepository extends Dao {
     }
 
     private final static String findAllByFilmTitleEnContainsAndWillBeShown =
-            "SELECT * FROM \"session\" s INNER JOIN film f  ON s.film_id = f.film_id WHERE upper(f.title_en) LIKE ?" +
+            "SELECT * FROM \"session\" s INNER JOIN film f  ON s.film_id = f.film_id WHERE UPPER(f.title_en) LIKE UPPER(?)" +
                     "AND ((s.date>current_date) OR (s.date=current_date AND s.time>=?)) ";
 
     public List<Session> findAllByFilmTitleEnContainsAndWillBeShown(LocalTime current_time, String search, Pageable pageable) {
@@ -60,7 +60,7 @@ public class SessionRepository extends Dao {
     }
 
     private final static String findAllByFilmTitleEnContainsAndPast =
-            "SELECT * FROM \"session\" s INNER JOIN film f  ON s.film_id = f.film_id WHERE upper(f.title_en) LIKE ?" +
+            "SELECT * FROM \"session\" s INNER JOIN film f  ON s.film_id = f.film_id WHERE UPPER(f.title_en) LIKE UPPER(?)" +
                     "AND ((s.date<current_date) OR (s.date=current_date AND s.time<?)) ";
 
     public List<Session> findAllByFilmTitleEnContainsAndPast(LocalTime current_time, String search, Pageable pageable) {

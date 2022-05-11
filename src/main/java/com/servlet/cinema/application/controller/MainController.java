@@ -34,13 +34,14 @@ public class MainController {
                        @RequestParam(name = "date1", required = false) LocalDate date1,
                        @RequestParam(name = "date2", required = false) LocalDate date2) {
         LinkedList<Film> films = sortManager.findSimpleFilms(search, sort_film);
+        System.out.println(sort_session);
         date1 = Validator.toValidDate(date1, 0);
         date2 = Validator.toValidDate(date2, 7);
         if (date2.isBefore(date1))
             date2 = date1;
         if (date1.plusDays(14).isBefore(date2))
             date2 = date1.plusDays(14);
-        HashMap<Film, List<List<Session>>> sessions = sortManager.tableSessionByFilm(films, sort_session, sort_film, date1, date2, availability);
+        HashMap<Film, List<List<Session>>> sessions = sortManager.tableSessionByFilm(films, sort_session, date1, date2, availability);
         if (films.size() == 1)
             films.add(films.get(0));
         if (films.size() == 0)

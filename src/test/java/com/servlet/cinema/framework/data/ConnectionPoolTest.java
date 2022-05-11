@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class ConnectionPoolTest {
+
     @BeforeAll
     static void init() throws IOException {
         try (InputStream fis = new FileInputStream("src/main/webapp/framework.properties")) {

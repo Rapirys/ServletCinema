@@ -41,6 +41,21 @@ public class FilmRepository extends Dao {
         return filmSet;
     }
 
+    public List<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu, Pageable pageable) {
+        ArrayList<Film> filmSet = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(findAllByTitleEnContainsOrTitleRuContains + pageable);
+            preparedStatement.setString(1, '%' + titleEn + '%');
+            preparedStatement.setString(2, '%' + titleRu + '%');
+            ResultSet resultSet = preparedStatement.executeQuery();
+            initFilmList(resultSet, filmSet);
+        } catch (SQLException e) {
+            logger.error("Can't find film");
+            throw new RepositoryException("Can't find film", e);
+        }
+        return filmSet;
+    }
+
     private final static String findAllByTitleEnContainsOrTitleRuContainsAndBoxOffice =
             "SELECT * FROM film f WHERE UPPER(f.title_en) LIKE UPPER(?) OR UPPER(f.title_ru) LIKE UPPER(?) AND f.box_office =?";
 
@@ -61,20 +76,7 @@ public class FilmRepository extends Dao {
     }
 
 
-    public List<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu, Pageable pageable) {
-        ArrayList<Film> filmSet = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(findAllByTitleEnContainsOrTitleRuContains + pageable);
-            preparedStatement.setString(1, '%' + titleEn + '%');
-            preparedStatement.setString(2, '%' + titleRu + '%');
-            ResultSet resultSet = preparedStatement.executeQuery();
-            initFilmList(resultSet, filmSet);
-        } catch (SQLException e) {
-            logger.error("Can't find film");
-            throw new RepositoryException("Can't find film", e);
-        }
-        return filmSet;
-    }
+
 
 
     private final static String findByBoxOfficeTrueOrderByTitleEn =
